@@ -1,0 +1,109 @@
+@startuml VLN2
+'https://plantuml.com/deployment-diagram
+
+title: VLN2
+
+[HTTP] as http
+
+component "condominio Manager"{
+
+    portin api as auth
+    portin "api/admin" as admin
+    portin "api/condominios" as condominios
+    portin "api/condos" as condos
+    portin "api/assembleias" as assembleias
+    portin "api/despesas" as despesas
+
+    component authApp{
+        portin authPortIn
+    }
+    interface "Notify API" as notfApiAuth
+
+    component adminComponent{
+        portin adminPortIn
+    }
+    interface "Notify API" as notfApiAdmin
+
+    component condominioQueries{
+        portin condominioQueriesPortIn
+    }
+    interface "Notify API" as notfApiCondominioQueries
+
+    component condominioCommands{
+        portin condominioCommandsPortIn
+    }
+    interface "Notify API" as notfApiCondominioCommands
+
+    component condo{
+        portin condoPortIn
+    }
+    interface "Notify API" as notfApiCondo
+
+    component assembleiasComponent{
+        portin assembleiasPortIn
+    }
+    interface "Notify API" as notfApiAssembleias
+
+    component despesasComponent{
+        portin despesasPortIn
+    }
+    interface "Notify API" as notfApiDespesas
+
+    component MessageBroker
+    interface "Publish API" as pubapi
+}
+
+
+http -(0-- auth
+auth -(0- authPortIn
+authApp -- notfApiAuth
+
+http -(0-- admin
+admin -(0- adminPortIn
+adminComponent -- notfApiAdmin
+
+http -(0-- condominios
+condominios -(0- condominioCommandsPortIn
+condominios -(0- condominioQueriesPortIn
+condominioCommands -- notfApiCondominioCommands
+condominioQueries --notfApiCondominioQueries
+
+http -(0-- condos
+condos -(0- condoPortIn
+condo -- notfApiCondo
+
+http -(0-- assembleias
+assembleias -(0- assembleiasPortIn
+assembleiasComponent -- notfApiAssembleias
+
+http -(0-- despesas
+despesas -(0- despesasPortIn
+despesasComponent -- notfApiDespesas
+
+MessageBroker ----- pubapi
+
+MessageBroker --up( notfApiAdmin
+MessageBroker --up( notfApiAuth
+MessageBroker --up( notfApiCondominioCommands
+MessageBroker --up( notfApiCondominioQueries
+MessageBroker --up( notfApiCondo
+MessageBroker --up( notfApiAssembleias
+MessageBroker --up( notfApiDespesas
+
+authApp --( pubapi
+adminComponent --( pubapi
+condominioCommands --( pubapi
+condominioQueries --( pubapi
+condo --( pubapi
+assembleiasComponent --( pubapi
+despesasComponent --( pubapi
+
+
+
+
+
+
+
+
+
+@enduml

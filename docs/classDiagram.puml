@@ -1,0 +1,117 @@
+@startuml 'https://plantuml.com/deployment-diagram'
+
+class user{
+    email
+    palavra-passe
+}
+user : register()
+user : login()
+user : deactivate()
+
+class admin{
+    email
+    nome
+    idade
+    dataNascimento
+    AlgumComprovativo
+}
+admin : register()
+admin : editAdmin()
+
+class condominio{
+    codigoCondominio
+    Morada
+    Codigo-Postal
+    HashMap<Data,Admin> admins
+    Set<> condo
+    agua
+    luz
+    despesas
+
+}
+condominio : createCondominio()
+condominio : editCondominio()
+condominio : deleteCondominio()
+condominio : changeAdmin()
+condominio : getOverview()
+condominio : getCondominio()
+condominio : getCondominios()
+condominio : getComndominiosPerAdmin()
+condominio : addCondo()
+condominio : addCondos()
+condominio : getCondo()
+condominio : getCondos()
+
+class condo{
+    numContribuinte
+    nome
+    idade
+    dataNascimento
+}
+condo : createCondo()
+condo : editCondo()
+condo : deactivateCondo()
+condo : getCondo()
+condo : getCondos()
+condo : getCondosPerCondominio()
+
+class fracao{
+    codigoCondominio
+    nomeFracao
+    numContribuinte
+    dataDeEntrada
+
+    permilagem
+}
+fracao : createFracao()
+fracao : editFracao()
+fracao : getPermilagem()
+
+class despesaComum{
+    
+}
+despesaComum : createDespesaComum()
+despesaComum : editDespesaComum()
+despesaComum : getDespesaComum()
+despesaComum : getDespesas()
+
+class receita{
+
+}
+receita : createReceita()
+receita : editReceita()
+receita : searchReceita()
+
+class assembleia{
+    codigoCondominio
+    DataReuniao
+    Descrição
+    Estado
+}
+assembleia : createAssembleia()
+assembleia : editAssembleia()
+assembleia : addPDF()
+assembleia : getAssembleia()
+assembleia : getResultado()
+assembleia : getAssembleias()
+
+user "1" -> "1" admin: contem
+
+admin "1, *" --> "*" condominio: gerem/criam
+
+admin "1, *" --> "*" assembleia: gere
+
+admin "1" -> "1, *" condo: cria
+
+condominio "1" --> "*" assembleia: contem
+condominio "1" --> "*" despesaComum: contem
+condominio "1" --> "*" receita: contem
+condominio "*" --> "0, *" fracao: contem 
+
+condo "0, 1" --> "0,*" fracao: contem
+
+fracao "1" --> "*" despesaComum: paga
+
+
+
+@enduml

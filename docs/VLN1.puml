@@ -1,0 +1,27 @@
+@startuml VLN1
+'https://plantuml.com/deployment-diagram
+
+skinparam linetype ortho
+
+title: VLN1
+
+component "condominio Manager"{
+
+    portin api as auth
+    portin "api/admin" as admin
+    portin "api/condominios" as condominios
+    portin "api/condos" as condos
+    portin "api/assembleias" as assembleias
+    portin "api/despesas" as despesas
+}
+
+
+[Http Client] -down(0-- auth
+[Http Client] -down(0-- admin
+[Http Client] -down(0-- condominios
+[Http Client] -down(0-- condos
+[Http Client] -down(0-- assembleias
+[Http Client] -down(0-- despesas
+
+
+@enduml
