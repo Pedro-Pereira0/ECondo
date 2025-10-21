@@ -33,6 +33,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import com.eCondo.auth.model.Role;
+import com.eCondo.auth.repository.UserRepository;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -104,7 +106,7 @@ public class SecurityConfig {
             // public endpoints
 
             // private endpoints
-            .requestMatchers("/api/admin/user/**").hasRole(Role.ADMIN) // user management
+            .requestMatchers("/api/admin/user/**").hasRole(Role.SYS_ADMIN) // user management
             .anyRequest().authenticated()
 
             .and()
