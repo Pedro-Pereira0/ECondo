@@ -66,6 +66,7 @@ public interface SpringDataUserRepository extends UserRepository, CrudRepository
 	 * @return
 	 */
 	@Cacheable
+	@Override
 	default User getById(final Long id) {
 		final Optional<User> maybeUser = findById(id);
 		// throws 404 Not Found if the user does not exist or is not enabled
@@ -73,6 +74,7 @@ public interface SpringDataUserRepository extends UserRepository, CrudRepository
 	}
 
 	@Cacheable
+	@Override
 	Optional<User> findByUsername(String username);
 }
 

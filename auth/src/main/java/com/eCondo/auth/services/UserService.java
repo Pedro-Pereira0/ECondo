@@ -1,13 +1,13 @@
 package com.eCondo.auth.services;
 
-import java.util.Optional;
-
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.eCondo.auth.api.mappers.UserMapper;
+import com.eCondo.auth.api.requests.CreateUserRequest;
 import com.eCondo.auth.exceptions.ConflictException;
 import com.eCondo.auth.model.User;
 import com.eCondo.auth.repository.UserRepository;
@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 public class UserService implements UserDetailsService{
 
     private final PasswordEncoder passwordEncoder;
-    
+    private final UserMapper userMapper;
     private UserRepository userRepo;
 
     @Transactional
@@ -33,7 +33,7 @@ public class UserService implements UserDetailsService{
 			throw new ValidationException("Passwords don't match!");
 		}
 
-		User user = userEditMapper.create(request);
+		User user = userMapper.create(request);
 		user.setPassword(passwordEncoder.encode(request.getPassword()));
 
 		user = userRepo.save(user);
@@ -53,14 +53,14 @@ public class UserService implements UserDetailsService{
 			throw new ValidationException("Passwords don't match!");
 		}
 
-		final User user = userEditMapper.create(request);
+		final User user = userMapper.create(request);
 		user.setPassword(passwordEncoder.encode(request.getPassword()));
 
 
 		return userRepo.save(user);
 	}
 
-    @Transactional
+/*     @Transactional
 	public User update(final Long id, final EditUserRequest request) {
 		final User user = userRepo.getById(id);
 		userEditMapper.update(request, user);
@@ -77,7 +77,7 @@ public class UserService implements UserDetailsService{
 		}
 		final EditUserRequest updateUserRequest = new EditUserRequest(request.getFullName(), request.getAuthorities());
 		return update(optionalUser.get().getId(), updateUserRequest);
-	}
+	} */
 
 	@Transactional
 	public User delete(final Long id) {

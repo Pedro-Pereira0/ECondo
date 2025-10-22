@@ -16,7 +16,6 @@ import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +25,13 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import static java.util.stream.Collectors.joining;
-import java.security.Principal;
+
+import com.eCondo.auth.api.mappers.UserViewMapper;
+import com.eCondo.auth.api.requests.AuthRequest;
+import com.eCondo.auth.api.requests.CreateUserRequest;
+import com.eCondo.auth.api.views.UserView;
+import com.eCondo.auth.model.User;
+import com.eCondo.auth.services.UserService;
 
 /**
  * Based on https://github.com/Yoh0xFF/java-spring-security-example
@@ -82,7 +87,7 @@ public class AuthApi {
 		return new ResponseEntity<>(userViewMapper.toUserView(user), HttpStatus.CREATED);
 	}
 
-	//Uses the same request as the created so the password and username is updated
+/* 	//Uses the same request as the created so the password and username is updated
 	@PutMapping("update")
 	public ResponseEntity<UserView> update(Principal principal, @RequestBody @Valid final UpdateUserRequest request){
 		int index = principal.getName().indexOf(",");
@@ -90,6 +95,6 @@ public class AuthApi {
 
 		final var user = userService.newUpdate(username,request);
 		return new ResponseEntity<>(userViewMapper.toUserView(user),HttpStatus.OK);
-	}
+	} */
 
 }
