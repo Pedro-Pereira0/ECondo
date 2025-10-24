@@ -104,13 +104,17 @@ public class SecurityConfig {
 				.requestMatchers("/").permitAll().requestMatchers(format("%s/**", restApiDocPath)).permitAll()
 				.requestMatchers(format("%s/**", swaggerPath)).permitAll()
             // public endpoints
+				.requestMatchers("/api/login").permitAll()
+				.requestMatchers("/api/register").permitAll()
 
             // private endpoints
             .requestMatchers("/api/admin/user/**").hasRole(Role.SYS_ADMIN) // user management
             .anyRequest().authenticated()
 
             .and()
+				.csrf().disable()
                 .headers().frameOptions().disable();
+				
 
         http
             // Set up oauth2 resource server
