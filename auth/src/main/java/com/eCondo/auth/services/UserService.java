@@ -22,7 +22,7 @@ public class UserService implements UserDetailsService{
 
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
-    private UserRepository userRepo;
+    private final UserRepository userRepo;
 
     @Transactional
 	public User create(final CreateUserRequest request) {
@@ -32,7 +32,7 @@ public class UserService implements UserDetailsService{
 		if (!request.getPassword().equals(request.getRePassword())) {
 			throw new ValidationException("Passwords don't match!");
 		}
-
+		
 		User user = userMapper.create(request);
 		user.setPassword(passwordEncoder.encode(request.getPassword()));
 

@@ -27,7 +27,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "USER")
+@Table(name = "SYS_USER")
 @EntityListeners(AuditingEntityListener.class)
 public class User implements UserDetails{
     private static final long serialVersionUID = 1L;
