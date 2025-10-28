@@ -17,6 +17,7 @@ import static java.util.stream.Collectors.toSet;
 public abstract class UserMapper {
 
     @Mapping(source = "authorities", target = "authorities", qualifiedByName = "stringToRole")
+	@Mapping(target = "enabled", constant = "true")
 	public abstract User create(CreateUserRequest request, final Set<String> authorities);
 
     @Named("stringToRole")
