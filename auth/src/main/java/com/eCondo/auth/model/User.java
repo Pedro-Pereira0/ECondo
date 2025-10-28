@@ -86,6 +86,10 @@ public class User implements UserDetails{
 	@Setter
 	private String fullName;
 
+	@Getter
+	@Setter
+	private String company;
+
 	@ElementCollection
 	@Getter
 	private final Set<Role> authorities = new HashSet<>();

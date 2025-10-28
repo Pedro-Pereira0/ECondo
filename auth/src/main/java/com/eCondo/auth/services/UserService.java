@@ -1,5 +1,7 @@
 package com.eCondo.auth.services;
 
+import java.util.HashSet;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.eCondo.auth.api.mappers.UserMapper;
 import com.eCondo.auth.api.requests.CreateUserRequest;
 import com.eCondo.auth.exceptions.ConflictException;
+import com.eCondo.auth.model.Role;
 import com.eCondo.auth.model.User;
 import com.eCondo.auth.repository.UserRepository;
 
@@ -32,8 +35,11 @@ public class UserService implements UserDetailsService{
 		if (!request.getPassword().equals(request.getRePassword())) {
 			throw new ValidationException("Passwords don't match!");
 		}
+
+		final HashSet<String> authorities = new HashSet<>();
+		authorities.add(Role.ADMIN);
 		
-		User user = userMapper.create(request);
+		User user = userMapper.create(request, authorities);
 		user.setPassword(passwordEncoder.encode(request.getPassword()));
 
 		user = userRepo.save(user);
@@ -53,7 +59,10 @@ public class UserService implements UserDetailsService{
 			throw new ValidationException("Passwords don't match!");
 		}
 
-		final User user = userMapper.create(request);
+		final HashSet<String> authorities = new HashSet<>();
+		authorities.add(Role.ADMIN);
+
+		final User user = userMapper.create(request, authorities);
 		user.setPassword(passwordEncoder.encode(request.getPassword()));
 
 

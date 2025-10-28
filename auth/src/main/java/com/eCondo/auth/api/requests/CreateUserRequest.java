@@ -23,6 +23,8 @@ public class CreateUserRequest {
 	@NotBlank
 	private String fullName;
 
+	private String company;
+
 	@NonNull
 	@NotBlank
 	private String password;
