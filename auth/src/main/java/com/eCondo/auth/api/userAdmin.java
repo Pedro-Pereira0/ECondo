@@ -1,19 +1,15 @@
 package com.eCondo.auth.api;
 
-import java.util.List;
-
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eCondo.auth.api.mappers.UserViewMapper;
 import com.eCondo.auth.api.requests.CreateUserRequest;
 import com.eCondo.auth.api.views.UserView;
-import com.eCondo.auth.model.User;
 import com.eCondo.auth.model.Role;
 import com.eCondo.auth.services.UserService;
 
