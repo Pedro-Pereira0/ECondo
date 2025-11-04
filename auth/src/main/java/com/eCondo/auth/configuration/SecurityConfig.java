@@ -85,7 +85,7 @@ public class SecurityConfig {
 		return new BCryptPasswordEncoder();
 	}
 
-    @Bean
+	@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         // Enable CORS and disable CSRF
 		http = http.cors(Customizer.withDefaults()).csrf(csrf -> csrf.disable());
@@ -98,8 +98,10 @@ public class SecurityConfig {
 				exceptions -> exceptions.authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
 						.accessDeniedHandler(new BearerTokenAccessDeniedHandler()));
 
+		//Old
+		
 		// Set permissions on endpoints
-        http.authorizeHttpRequests()
+      /*   http.authorizeHttpRequests()
             // Swagger endpoints must be public
 				.requestMatchers("/").permitAll().requestMatchers(format("%s/**", restApiDocPath)).permitAll()
 				.requestMatchers(format("%s/**", swaggerPath)).permitAll()
@@ -119,10 +121,34 @@ public class SecurityConfig {
         http
             // Set up oauth2 resource server
             .httpBasic(Customizer.withDefaults())
-            .oauth2ResourceServer().jwt();
+            .oauth2ResourceServer().jwt(); */
 
+		http
+			.authorizeHttpRequests(authorize -> authorize
+				// Swagger endpoints must be public
+				.requestMatchers("/").permitAll().requestMatchers(format("%s/**", restApiDocPath)).permitAll()
+				.requestMatchers(format("%s/**", swaggerPath)).permitAll()
+            	// public endpoints
+				.requestMatchers("/api/login").permitAll()
+				.requestMatchers("/api/register").permitAll()
 
-		return http.build(); 
+            	// private endpoints
+				.requestMatchers("/api/admin/user/**").hasRole(Role.SYS_ADMIN) // user management
+				.anyRequest().authenticated()
+			)
+			.csrf(csrf -> csrf.disable())
+    		.headers(headers -> headers
+        		.frameOptions(frameOptions -> frameOptions.disable())
+			);
+
+			http
+				// Set up oauth2 resource server
+				.httpBasic(Customizer.withDefaults())
+				.oauth2ResourceServer(oauth2 -> oauth2
+					.jwt(Customizer.withDefaults())
+				);
+		
+			return http.build(); 
     }
 
     // Used by JwtAuthenticationProvider to generate JWT tokens
