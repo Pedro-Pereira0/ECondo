@@ -1,5 +1,6 @@
 package com.eCondo.auth.api;
 
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,13 +42,13 @@ public class userAdmin {
 	} */
 
 	@DeleteMapping("{id}")
-	public UserView delete(@PathVariable final Long id) {
+	public UserView delete(@PathVariable @NonNull final Long id) {
 		final var user = userService.delete(id);
 		return userViewMapper.toUserView(user);
 	}
 
 	@GetMapping("{id}")
-	public UserView get(@PathVariable final Long id) {
+	public UserView get(@PathVariable @NonNull final Long id) {
 		final var user = userService.getUser(id);
 		return userViewMapper.toUserView(user);
 	}
