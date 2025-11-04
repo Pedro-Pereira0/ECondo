@@ -28,11 +28,14 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
 
 import com.eCondo.auth.exceptions.NotFoundException;
 import com.eCondo.auth.model.User;
 import com.eCondo.auth.repository.UserRepository;
+
+
 
 /**
  * Based on https://github.com/Yoh0xFF/java-spring-security-example
@@ -43,20 +46,23 @@ import com.eCondo.auth.repository.UserRepository;
 public interface SpringDataUserRepository extends UserRepository, CrudRepository<User, Long> {
 
 	@Override
+	@NonNull
 	@CacheEvict(allEntries = true)
-	<S extends User> List<S> saveAll(Iterable<S> entities);
+	<S extends User> List<S> saveAll(@NonNull Iterable<S> entities);
 
 	@Override
+	@NonNull
 	@Caching(evict = { @CacheEvict(key = "#p0.id", condition = "#p0.id != null"),
 			@CacheEvict(key = "#p0.username", condition = "#p0.username != null") })
-	<S extends User> S save(S entity);
+	<S extends User> S save(@NonNull S entity);
 
 	/**
 	 * findById searches a specific user and returns an optional
 	 */
 	@Override
 	@Cacheable
-	Optional<User> findById(Long objectId);
+	@NonNull
+	Optional<User> findById(@NonNull Long objectId);
 
 	/**
 	 * getById explicitly loads a user or throws an exception if the user does not
@@ -67,7 +73,7 @@ public interface SpringDataUserRepository extends UserRepository, CrudRepository
 	 */
 	@Cacheable
 	@Override
-	default User getById(final Long id) {
+	default User getById(@NonNull final Long id) {
 		final Optional<User> maybeUser = findById(id);
 		// throws 404 Not Found if the user does not exist or is not enabled
 		return maybeUser.filter(User::isEnabled).orElseThrow(() -> new NotFoundException(User.class, id));

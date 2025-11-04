@@ -142,7 +142,7 @@ public class User implements UserDetails{
 		return u;
 	}
 
-	public void setPassword(final String password) {
+	public final void setPassword(final String password) {
 		this.password = Objects.requireNonNull(password);
 	}
 
