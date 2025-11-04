@@ -2,6 +2,7 @@ package com.eCondo.auth.services;
 
 import java.util.HashSet;
 
+import org.springframework.lang.NonNull;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -89,7 +90,7 @@ public class UserService implements UserDetailsService{
 	} */
 
 	@Transactional
-	public User delete(final Long id) {
+	public User delete(@NonNull final Long id) {
 		final User user = userRepo.getById(id);
 
 		// user.setUsername(user.getUsername().replace("@", String.format("_%s@",
@@ -108,7 +109,7 @@ public class UserService implements UserDetailsService{
 		return userRepo.findByUsername(username).isPresent();
 	}
 
-	public User getUser(final Long id) {
+	public User getUser(@NonNull final Long id) {
 		return userRepo.getById(id);
 	}
 
