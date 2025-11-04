@@ -1,0 +1,33 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Auth",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.eCondo.auth.AuthApplication",
+            "projectName": "auth",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "env":{
+                "INSTANCE":"AUTH",
+                "PORT":"8080"
+            }
+        },
+
+        {
+            "type": "java",
+            "name": "AuthInstance1",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.eCondo.auth.AuthApplication",
+            "projectName": "auth",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "env":{
+                "INSTANCE":"AUTH_1",
+                "PORT":"8081"
+            }
+        }
+    ]
+}
