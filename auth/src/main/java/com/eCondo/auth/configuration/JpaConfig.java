@@ -23,7 +23,7 @@ public class JpaConfig {
 	 */
 	@Bean("auditorProvider")
 	public AuditorAware<String> auditorProvider() {
-		// TODO for public anonymous access, it should not be "SYSTEM" but "PUBLIC"
+		//for public anonymous access, it should not be "SYSTEM" but "PUBLIC"
 		return () -> Optional.ofNullable(SecurityContextHolder.getContext()).map(SecurityContext::getAuthentication)
 				.map(Authentication::getName).or(() -> Optional.of("SYSTEM"));
 	}
