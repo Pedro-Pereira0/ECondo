@@ -98,31 +98,6 @@ public class SecurityConfig {
 				exceptions -> exceptions.authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
 						.accessDeniedHandler(new BearerTokenAccessDeniedHandler()));
 
-		//Old
-		
-		// Set permissions on endpoints
-      /*   http.authorizeHttpRequests()
-            // Swagger endpoints must be public
-				.requestMatchers("/").permitAll().requestMatchers(format("%s/**", restApiDocPath)).permitAll()
-				.requestMatchers(format("%s/**", swaggerPath)).permitAll()
-            // public endpoints
-				.requestMatchers("/api/login").permitAll()
-				.requestMatchers("/api/register").permitAll()
-
-            // private endpoints
-            .requestMatchers("/api/admin/user/**").hasRole(Role.SYS_ADMIN) // user management
-            .anyRequest().authenticated()
-
-            .and()
-				.csrf().disable()
-                .headers().frameOptions().disable();
-				
-
-        http
-            // Set up oauth2 resource server
-            .httpBasic(Customizer.withDefaults())
-            .oauth2ResourceServer().jwt(); */
-
 		http
 			.authorizeHttpRequests(authorize -> authorize
 				// Swagger endpoints must be public
