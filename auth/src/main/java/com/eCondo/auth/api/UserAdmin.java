@@ -25,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping(path = "api/admin/user")
 @RolesAllowed(Role.SYS_ADMIN)
 @RequiredArgsConstructor
-public class userAdmin {
+public class UserAdmin {
     private final UserService userService;
 	private final UserViewMapper userViewMapper;
 

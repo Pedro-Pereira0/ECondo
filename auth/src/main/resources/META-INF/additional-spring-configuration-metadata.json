@@ -1,0 +1,37 @@
+{"properties": [
+  {
+    "name": "jwt.private.key",
+    "type": "java.lang.String",
+    "description": "private key"
+  },
+  {
+    "name": "jwt.public.key",
+    "type": "java.lang.String",
+    "description": "public key"
+  },
+  {
+    "name": "app.rabbitmq.userExchange",
+    "type": "java.lang.String",
+    "description": "rabbitMQ's user exchange"
+  },
+  {
+    "name": "app.rabbitmq.userCreatedQueue",
+    "type": "java.lang.String",
+    "description": "rabbitMQ's user created queue"
+  },
+  {
+    "name": "app.rabbitmq.userCreatedRoutingKey",
+    "type": "java.lang.String",
+    "description": "rabbitMQ's User created routing key"
+  },
+  {
+    "name": "app.rabbitmq.userUpdatedQueue",
+    "type": "java.lang.String",
+    "description": "rabbitMQ's user updated queue"
+  },
+  {
+    "name": "app.rabbitmq.userUpdatedRoutingKey",
+    "type": "java.lang.String",
+    "description": "rabbitMQ's user updated routing key"
+  }
+]}
