@@ -2,18 +2,21 @@ package com.eCondo.auth.services;
 
 import java.util.HashSet;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import com.eCondo.auth.api.events.UserCreatedEvent;
+import com.eCondo.auth.api.mappers.EventUserMapper;
 import com.eCondo.auth.api.mappers.UserMapper;
 import com.eCondo.auth.api.requests.CreateUserRequest;
 import com.eCondo.auth.exceptions.ConflictException;
 import com.eCondo.auth.model.Role;
 import com.eCondo.auth.model.User;
+import com.eCondo.auth.notf.EventPublisher;
 import com.eCondo.auth.repository.UserRepository;
 
 import jakarta.transaction.Transactional;
@@ -27,6 +30,12 @@ public class UserService implements UserDetailsService{
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
     private final UserRepository userRepo;
+	private final EventUserMapper eventUserMapper;
+	//private final RabbitPublisher eventPublisher;
+	private final EventPublisher eventPublisher;
+
+	@Value("${app.instance}")
+	private final String instance;
 
     @Transactional
 	public User create(final CreateUserRequest request) {
@@ -45,8 +54,8 @@ public class UserService implements UserDetailsService{
 
 		user = userRepo.save(user);
 
-		/* CreateUserEvent event = eventUserMapper.create(instance, request);
-		eventPublisher.send(event); */
+		UserCreatedEvent event = eventUserMapper.toEvent(instance, request);
+		eventPublisher.send(event);
 
 		return user;
 	}

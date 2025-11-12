@@ -33,5 +33,10 @@
     "name": "app.rabbitmq.userUpdatedRoutingKey",
     "type": "java.lang.String",
     "description": "rabbitMQ's user updated routing key"
+  },
+  {
+    "name": "app.instance",
+    "type": "java.lang.String",
+    "description": "Identifies the running instance"
   }
 ]}

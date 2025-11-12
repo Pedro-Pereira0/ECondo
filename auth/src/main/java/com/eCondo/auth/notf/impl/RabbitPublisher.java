@@ -5,7 +5,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.eCondo.auth.api.events.CreateUserEvent;
+import com.eCondo.auth.api.events.UserCreatedEvent;
 import com.eCondo.auth.notf.EventPublisher;
 
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class RabbitPublisher implements EventPublisher{
     private String userCreatedKey;
     
     @Override
-    public void send(CreateUserEvent event) {
+    public void send(UserCreatedEvent event) {
             rabbitTemplate.convertAndSend(userExchange, userCreatedKey, event, msg -> {
             msg.getMessageProperties().setDeliveryMode(MessageDeliveryMode.NON_PERSISTENT);
             return msg;
