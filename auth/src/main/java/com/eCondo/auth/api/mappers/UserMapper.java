@@ -7,6 +7,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
+import com.eCondo.auth.api.events.UserCreatedEvent;
 import com.eCondo.auth.api.requests.CreateUserRequest;
 import com.eCondo.auth.model.Role;
 import com.eCondo.auth.model.User;
@@ -19,6 +20,10 @@ public abstract class UserMapper {
     @Mapping(source = "authorities", target = "authorities", qualifiedByName = "stringToRole")
 	@Mapping(target = "enabled", constant = "true")
 	public abstract User create(CreateUserRequest request, final Set<String> authorities);
+
+	@Mapping(source = "authorities", target = "authorities", qualifiedByName = "stringToRole")
+	@Mapping(target = "enabled", constant = "true")
+	public abstract User create(UserCreatedEvent event);
 
     @Named("stringToRole")
 	protected Set<Role> stringToRole(final Set<String> authorities) {

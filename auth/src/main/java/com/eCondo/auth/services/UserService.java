@@ -61,22 +61,25 @@ public class UserService implements UserDetailsService{
 	}
 
     @Transactional
-	public User localCreate(final CreateUserRequest request) {
-		if (userRepo.findByUsername(request.getUsername()).isPresent()) {
+	public User localCreate(final UserCreatedEvent event) {
+		if (userRepo.findByUsername(event.getUsername()).isPresent()) {
 			throw new ConflictException("Username already exists!");
 		}
-		if (!request.getPassword().equals(request.getRePassword())) {
+		if (!event.getPassword().equals(event.getRePassword())) {
 			throw new ValidationException("Passwords don't match!");
 		}
 
 		final HashSet<String> authorities = new HashSet<>();
 		authorities.add(Role.ADMIN);
 
-		final User user = userMapper.create(request, authorities);
-		user.setPassword(passwordEncoder.encode(request.getPassword()));
+		final User user = userMapper.create(event);
+		user.setPassword(passwordEncoder.encode(event.getPassword()));
 
-
+		System.out.println("Event " + event + " processed.");
+		
 		return userRepo.save(user);
+
+		
 	}
 
 /*     @Transactional

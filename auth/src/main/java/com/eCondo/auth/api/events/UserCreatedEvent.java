@@ -32,6 +32,8 @@ public class UserCreatedEvent {
 	@NotBlank
 	private String rePassword;
 
+	private String company;
+
 	private Set<String> authorities = new HashSet<>();
 
 	public UserCreatedEvent(final String instance, final String username, final String fullName, final String password) {

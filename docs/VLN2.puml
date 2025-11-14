@@ -19,7 +19,7 @@ component "condominio Manager"{
     }
     interface "Notify API" as notfApiAuth
 
-    component adminComponent{
+    component adminApp{
         portin adminPortIn
     }
     interface "Notify API" as notfApiAdmin
@@ -39,12 +39,12 @@ component "condominio Manager"{
     }
     interface "Notify API" as notfApiCondo
 
-    component assembleiasComponent{
+    component assembleiasApp{
         portin assembleiasPortIn
     }
     interface "Notify API" as notfApiAssembleias
 
-    component despesasComponent{
+    component despesasApp{
         portin despesasPortIn
     }
     interface "Notify API" as notfApiDespesas
@@ -60,7 +60,7 @@ authApp -- notfApiAuth
 
 http -(0-- admin
 admin -(0- adminPortIn
-adminComponent -- notfApiAdmin
+adminApp -- notfApiAdmin
 
 http -(0-- condominios
 condominios -(0- condominioCommandsPortIn
@@ -74,11 +74,11 @@ condo -- notfApiCondo
 
 http -(0-- assembleias
 assembleias -(0- assembleiasPortIn
-assembleiasComponent -- notfApiAssembleias
+assembleiasApp -- notfApiAssembleias
 
 http -(0-- despesas
 despesas -(0- despesasPortIn
-despesasComponent -- notfApiDespesas
+despesasApp -- notfApiDespesas
 
 MessageBroker ----- pubapi
 
@@ -91,12 +91,12 @@ MessageBroker --up( notfApiAssembleias
 MessageBroker --up( notfApiDespesas
 
 authApp --( pubapi
-adminComponent --( pubapi
+adminApp --( pubapi
 condominioCommands --( pubapi
 condominioQueries --( pubapi
 condo --( pubapi
-assembleiasComponent --( pubapi
-despesasComponent --( pubapi
+assembleiasApp --( pubapi
+despesasApp --( pubapi
 
 
 

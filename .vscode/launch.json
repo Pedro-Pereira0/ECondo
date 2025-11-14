@@ -10,7 +10,7 @@
             "args": "",
             "envFile": "${workspaceFolder}/.env",
             "env":{
-                "INSTANCE":"AUTH",
+                "app.instance":"AUTH",
                 "PORT":"8080"
             }
         },
@@ -25,7 +25,7 @@
             "args": "",
             "envFile": "${workspaceFolder}/.env",
             "env":{
-                "INSTANCE":"AUTH_1",
+                "app.instance":"AUTH_1",
                 "PORT":"8081"
             }
         }
