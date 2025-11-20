@@ -41,7 +41,7 @@ public class RabbitmqConfig {
     @Value("create.user")
     private String createUserKey;
 
-    @Value("${INSTANCE}")
+    @Value("${app.instance}")
     private String instance;
 
     

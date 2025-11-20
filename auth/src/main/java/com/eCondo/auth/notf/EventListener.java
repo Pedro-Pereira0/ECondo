@@ -16,7 +16,7 @@ public class EventListener {
     private final UserService userService;
 
     @Value("${app.instance}")
-    private final String instance;
+    private String instance;
 
     @RabbitListener(queues = "#{userCreatedQueue.name}")
     public void handleUserCreatedEvent(@NonNull UserCreatedEvent event){

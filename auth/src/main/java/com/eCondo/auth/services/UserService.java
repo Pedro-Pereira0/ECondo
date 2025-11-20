@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import com.eCondo.auth.api.events.UserCreatedEvent;
 import com.eCondo.auth.api.mappers.EventUserMapper;
 import com.eCondo.auth.api.mappers.UserMapper;
@@ -35,7 +36,7 @@ public class UserService implements UserDetailsService{
 	private final EventPublisher eventPublisher;
 
 	@Value("${app.instance}")
-	private final String instance;
+	private String instance;
 
     @Transactional
 	public User create(final CreateUserRequest request) {
@@ -55,6 +56,7 @@ public class UserService implements UserDetailsService{
 		user = userRepo.save(user);
 
 		UserCreatedEvent event = eventUserMapper.toEvent(instance, request);
+
 		eventPublisher.send(event);
 
 		return user;
@@ -72,14 +74,12 @@ public class UserService implements UserDetailsService{
 		final HashSet<String> authorities = new HashSet<>();
 		authorities.add(Role.ADMIN);
 
-		final User user = userMapper.create(event);
+		final User user = userMapper.create(event, authorities);
 		user.setPassword(passwordEncoder.encode(event.getPassword()));
 
 		System.out.println("Event " + event + " processed.");
 		
 		return userRepo.save(user);
-
-		
 	}
 
 /*     @Transactional

@@ -23,7 +23,7 @@ public abstract class UserMapper {
 
 	@Mapping(source = "authorities", target = "authorities", qualifiedByName = "stringToRole")
 	@Mapping(target = "enabled", constant = "true")
-	public abstract User create(UserCreatedEvent event);
+	public abstract User create(UserCreatedEvent event, final Set<String> authorities);
 
     @Named("stringToRole")
 	protected Set<Role> stringToRole(final Set<String> authorities) {

@@ -5,6 +5,9 @@ services:
     build:
       context: .
     container_name: app_1
+    networks:
+      - default_bridge
+      - internal_bridge
     depends_on:
       - db
     ports:
@@ -20,6 +23,16 @@ services:
   db:
     image: 'postgres:13.1-alpine'
     container_name: db_1
+    networks:
+      - internal_bridge
     environment:
       - POSTGRES_USER=${INSTANCE_1}
       - POSTGRES_PASSWORD=password
+     
+networks:
+  default_bridge:
+    external: true
+    name: eCondo_network
+  internal_bridge:
+    external: false
+    name: internal_bridge_${INSTANCE_1}
