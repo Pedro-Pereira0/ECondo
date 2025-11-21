@@ -25,7 +25,6 @@ public class EventListener {
             try{
                 userService.localCreate(event);
             }catch(Exception e){
-                e.printStackTrace();
                 System.out.println("Event " + event.toString() + "skipped.");
             }
         }
