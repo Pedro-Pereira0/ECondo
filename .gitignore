@@ -3,6 +3,7 @@ target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+rabbitmq_container_start_command
 
 ### STS ###
 .apt_generated

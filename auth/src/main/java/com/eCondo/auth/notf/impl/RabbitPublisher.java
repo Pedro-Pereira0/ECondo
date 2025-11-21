@@ -24,7 +24,6 @@ public class RabbitPublisher implements EventPublisher{
     
     @Override
     public void send(UserCreatedEvent event) {
-        System.out.println("sending to mq...\n");
         rabbitTemplate.convertAndSend(userExchange, userCreatedKey, event, msg -> {
         msg.getMessageProperties().setDeliveryMode(MessageDeliveryMode.NON_PERSISTENT);
         return msg;
