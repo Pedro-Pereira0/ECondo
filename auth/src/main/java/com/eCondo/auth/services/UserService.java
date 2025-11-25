@@ -15,6 +15,8 @@ import com.eCondo.auth.api.mappers.EventUserMapper;
 import com.eCondo.auth.api.mappers.UserMapper;
 import com.eCondo.auth.api.requests.CreateUserRequest;
 import com.eCondo.auth.exceptions.ConflictException;
+import com.eCondo.auth.exceptions.InvalidPasswordException;
+import com.eCondo.auth.model.PasswordValidator;
 import com.eCondo.auth.model.Role;
 import com.eCondo.auth.model.User;
 import com.eCondo.auth.notf.EventPublisher;
@@ -32,8 +34,8 @@ public class UserService implements UserDetailsService{
     private final UserMapper userMapper;
     private final UserRepository userRepo;
 	private final EventUserMapper eventUserMapper;
-	//private final RabbitPublisher eventPublisher;
 	private final EventPublisher eventPublisher;
+	private final PasswordValidator passwordValidator = new PasswordValidator();
 
 	@Value("${app.instance}")
 	private String instance;
@@ -46,6 +48,8 @@ public class UserService implements UserDetailsService{
 		if (!request.getPassword().equals(request.getRePassword())) {
 			throw new ValidationException("Passwords don't match!");
 		}
+
+		passwordValidator.validate(request.getPassword());
 
 		final HashSet<String> authorities = new HashSet<>();
 		authorities.add(Role.ADMIN);
@@ -70,6 +74,8 @@ public class UserService implements UserDetailsService{
 		if (!event.getPassword().equals(event.getRePassword())) {
 			throw new ValidationException("Passwords don't match!");
 		}
+
+		passwordValidator.validate(event.getPassword());
 
 		final HashSet<String> authorities = new HashSet<>();
 		authorities.add(Role.ADMIN);

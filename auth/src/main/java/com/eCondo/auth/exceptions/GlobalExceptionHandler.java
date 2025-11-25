@@ -172,6 +172,20 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 				.body(new ApiCallError<>("Access denied!", List.of(ex.getMessage())));
 	}
 
+	@ExceptionHandler(InvalidPasswordException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public ResponseEntity<ApiCallError<String>> handleInvalidPasswordException(final HttpServletRequest request, 
+		final InvalidPasswordException ex){
+			logger.error("handleInvalidPasswordException {}\n", request.getRequestURI(), ex);
+			
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+				.body(new ApiCallError<>("Bad request!", List.of(ex.getMessage())));
+	}
+
+    public Logger getLogger() {
+        return logger;
+    }
+
 	@Data
 	@NoArgsConstructor
 	@AllArgsConstructor
